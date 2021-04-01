@@ -13,9 +13,9 @@ import it.polito.tdp.lab04.model.Studente;
 public class CorsoDAO {
 	
 	/*
-	 * Ottengo tutti i corsi salvati nel Db
+	 *  ho dovuto mettere il metodo su static per inserire la lista come parametro per i valori del combobox
 	 */
-	public List<Corso> getTuttiICorsi() {
+	public  List<Corso> getTuttiICorsi() {
 
 		final String sql = "SELECT * FROM corso";
 
@@ -38,8 +38,10 @@ public class CorsoDAO {
 
 				// Crea un nuovo JAVA Bean Corso
 				// Aggiungi il nuovo oggetto Corso alla lista corsi
+				corsi.add(new Corso(codins,numeroCrediti,nome,periodoDidattico));
 			}
-
+			st.close();
+			rs.close();
 			conn.close();
 			
 			return corsi;
