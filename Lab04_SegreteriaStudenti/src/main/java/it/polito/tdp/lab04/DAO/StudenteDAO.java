@@ -74,28 +74,11 @@ public class StudenteDAO {
 				 rs.close();
 				 conn.close();
 
-//					String sql = "SELECT s.matricola, s.cognome, s.nome, s.CDS "
-//							+ "FROM studente s, iscrizione i "
-//							+ "WHERE s.matricola = i.matricola "
-//							+ "AND i.codins = ?";
-//					List<Studente>result = new LinkedList<Studente>();
-//
-//					try {
-//						Connection conn = ConnectDB.getConnection();
-//						PreparedStatement st= conn.prepareStatement(sql);
-//						st.setString(1,corso);
-//						ResultSet rs = st.executeQuery();
-//						
-//						while(rs.next()) {
-//							Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),
-//									rs.getString("cognome"),rs.getString("CDS"));
-//							result.add(s);
-//							 System.out.println("Controllll");
-//							
-//						}
+					
 				 
 			 }
 			 catch(SQLException e) {
+				 throw new RuntimeException("Errore Db Lista Studenti ", e);
 				 
 			 }
 		
@@ -103,6 +86,110 @@ public class StudenteDAO {
 			 
 			 return studenti;
 			 
+			
+		}
+
+
+
+		public List<Corso> getCorsiStudente(Studente studente) {
+			
+			String sql = "SELECT  c.codins, c.crediti, c.nome, c.pd "
+					+ "FROM  corso c,  iscrizione i,  studente s "
+					+ "WHERE i.matricola= s.matricola "
+					+ "AND  i.codins=c.codins "
+					+"AND s.matricola=? "
+					+ "GROUP BY c.nome";
+			
+			 List<Corso> corsi = new LinkedList<Corso>();
+			 try {
+				 Connection conn = ConnectDB.getConnection();
+				 PreparedStatement st = conn.prepareStatement(sql);
+				 st.setInt(1,studente.getMatricola());
+				
+				 ResultSet rs= st.executeQuery();
+				 
+				 while (rs.next()) {
+					 
+					 
+
+						String codins = rs.getString("codins");
+						int numeroCrediti = rs.getInt("crediti");
+						String nome = rs.getString("nome");
+						int periodoDidattico = rs.getInt("pd");
+						
+						Corso c = new Corso(codins,numeroCrediti,nome,periodoDidattico);
+						corsi.add(c);
+					
+				
+				 }
+				 st.close();
+				 rs.close();
+				 conn.close();
+
+				
+				 
+			 }
+			 catch(SQLException e) {
+				 throw new RuntimeException("Errore Db Corsi Studente", e);
+				 
+			 }
+		
+			 
+			 
+			 return corsi;
+			
+			
+			
+		}
+
+
+
+		public static boolean cerca(int matricola, String c) {
+			
+			String sql= "SELECT s.matricola,s.cognome,s.nome,s.CDS "+
+					 "FROM studente s,iscrizione i,corso c "+
+					 "WHERE i.codins=c.codins "+
+					 "AND c.nome=? "+
+					 "AND i.matricola=s.matricola "+
+					 "AND i.matricola=? "+				
+					 "GROUP BY s.matricola,s.cognome,s.nome,s.CDS ";
+			
+			
+			
+			 try {
+				 Connection conn = ConnectDB.getConnection();
+				 PreparedStatement st = conn.prepareStatement(sql);
+				 st.setString(1,c);
+				 st.setInt(2,matricola);
+				 
+				
+				 ResultSet rs= st.executeQuery();
+				 
+				if (rs.next()) {
+					st.close();
+					 rs.close();
+					 conn.close();
+					 
+					return true;
+					
+				
+				 }
+				else {
+					st.close();
+					 rs.close();
+					 conn.close();
+					 return false;
+				}
+				 
+
+				
+				 
+			 }
+			 catch(SQLException e) {
+				 throw new RuntimeException("Errore Db Cerca studenti", e);
+				 
+			 }
+			
 			
 		}
 	

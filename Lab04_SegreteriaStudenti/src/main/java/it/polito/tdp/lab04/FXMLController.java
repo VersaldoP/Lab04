@@ -5,6 +5,8 @@
 package it.polito.tdp.lab04;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.lab04.DAO.CorsoDAO;
@@ -58,9 +60,101 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML
+    private Button btnCerca;
+
+    @FXML
+    void doCerca(ActionEvent event) {
+    	txtResult.clear();
+    	String matricolaString = txtmatricolaStudente.getText();
+    	int matricola;
+    	String corso = comboCorsi.getValue();
+    	try {
+    		matricola = Integer.parseInt(matricolaString);
+    		
+    		}
+    	catch(NumberFormatException e ){
+    		txtResult.setText("Devi inserire un numero matricola ");
+    		return;    	
+    		}
+    	if(matricolaString.length()!=6) {
+    		txtResult.setText("Devi inserire un numero matricola di 6 cifre ");
+    		return;
+    	}
+    	Studente studente = model.getStudente(matricola);
+    	if( studente!=null) {
+    		if(corso!=null) {
+        		if(!corso.equals(" ")) {
+        			
+        			 if(model.cerca(matricola,corso)) {
+        				 txtResult.setText("Lo studente è iscritto al corso");
+        				 return;
+        				 
+        			 }else {
+        				 txtResult.setText("Lo studente NON è iscritto al corso");
+        				 return;
+        			 }
+        			
+        		}
+        		
+        		else {
+        			txtResult.setText("Hai selezionato il corso nullo");
+        			return;
+        		}
+        		
+        	}
+        	else {
+        		txtResult.setText("Non hai selezionato nessun corso ");
+        		return;
+    		
+    		
+        	}
+    	}
+    	else {
+    		txtResult.setText("la matricola inserita non ha trovato corrispondenze");
+    		return;
+    	}
+    	
+    	
+    	
+    	
+    	
+    }
 
     @FXML
     void doCercacorsi(ActionEvent event) {
+    	
+    	txtResult.clear();
+    	
+    	String matricolaString = txtmatricolaStudente.getText();
+    	int matricola;
+    	
+    	try {
+    		matricola = Integer.parseInt(matricolaString);
+    		
+    		}
+    	catch(NumberFormatException e ){
+    		txtResult.setText("Devi inserire un numero matricola ");
+    		return;    	
+    		}
+    	if(matricolaString.length()!=6) {
+    		txtResult.setText("Devi inserire un numero matricola di 6 cifre ");
+    		return;
+    	}
+    	Studente studente = model.getStudente(matricola);
+//    	System.out.println(studente);
+    	if( studente!=null) {
+    		List<Corso> corsiStudente = new LinkedList<Corso>();
+    		corsiStudente= model.getCorsiStudente(studente);
+    		for(Corso c: corsiStudente) {
+    			txtResult.appendText(c.getNome()+"\n");
+    		}
+    		
+    	}
+    	else {
+    		txtResult.setText("la matricola inserita non ha trovato corrispondenze");
+    	}
 
     }
     
@@ -113,7 +207,7 @@ public class FXMLController {
     	txtResult.clear();
     	
     	String corso = comboCorsi.getValue();
-    	System.out.println(corso);
+  
     	if(corso!=null) {
     		if(!corso.equals(" ")) {
     			

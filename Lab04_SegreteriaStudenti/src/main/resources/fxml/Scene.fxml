@@ -46,6 +46,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
                   <Button fx:id="btnCercacorsi" mnemonicParsing="false" onAction="#doCercacorsi" text="Cerca corsi" />
+                  <Button fx:id="btnCerca" mnemonicParsing="false" onAction="#doCerca" text="Cerca" />
                   <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" text="Iscrivi" />
                </children>
             </HBox>

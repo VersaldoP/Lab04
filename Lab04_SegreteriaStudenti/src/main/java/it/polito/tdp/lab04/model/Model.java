@@ -26,4 +26,14 @@ public class Model {
 		return studenteDAO.getListaStudenti(c);
 	}
 
+	public List<Corso> getCorsiStudente(Studente studente) {
+		
+		return studenteDAO.getCorsiStudente(studente);
+	}
+
+	public boolean cerca(int matricola, String c) {
+		
+		return StudenteDAO.cerca(matricola,c);
+	}
+
 }
