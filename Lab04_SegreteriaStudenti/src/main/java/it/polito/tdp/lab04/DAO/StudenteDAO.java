@@ -50,56 +50,58 @@ public class StudenteDAO {
 		
 		public List<Studente> getListaStudenti(String corso){
 			
-//			 String sql = "SELECT s.matricola,s.cognome,s.nome,s.CDS "+
-//					"FROM studente s,iscrizione i "+
-//					"WHERE i.codins=? "+
-//					"AND i.matricola=s.matricola "+
-//					"GROUP BY s.matricola,s.cognome,s.nome,s.CDS";
-//			 List<Studente> studenti = new LinkedList<Studente>();
-//			 try {
-//				 Connection conn = ConnectDB.getConnection();
-//				 PreparedStatement st = conn.prepareStatement(sql);
-//				 st.setString(1,corso);
-//				 ResultSet rs= st.executeQuery();
-//				 System.out.println("Controllll");
-//				 while (rs.next()) {
-//					 Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),
-//							 
-//							 rs.getString("cognome"),rs.getString("CDS"));
-//					 studenti.add(s);
-//					 System.out.println("Controllll");
-//				 }
-//				 st.close();
-//				 rs.close();
-//				 conn.close();
+			 String sql = "SELECT s.matricola,s.cognome,s.nome,s.CDS "+
+					"FROM studente s,iscrizione i,corso c "+
+					"WHERE i.codins=c.codins "+
+					"AND i.matricola=s.matricola "+
+					"AND c.nome=? "+
+					"GROUP BY s.matricola,s.cognome,s.nome,s.CDS";
+			
+			 List<Studente> studenti = new LinkedList<Studente>();
+			 try {
+				 Connection conn = ConnectDB.getConnection();
+				 PreparedStatement st = conn.prepareStatement(sql);
+				 st.setString(1,corso);
+				 ResultSet rs= st.executeQuery();
+	
+				 while (rs.next()) {
+					 Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),							 
+							 rs.getString("cognome"),rs.getString("CDS"));
+					 studenti.add(s);
+				
+				 }
+				 st.close();
+				 rs.close();
+				 conn.close();
 
-					String sql = "SELECT s.matricola, s.cognome, s.nome, s.CDS "
-							+ "FROM studente s, iscrizione i "
-							+ "WHERE s.matricola = i.matricola "
-							+ "AND i.codins = ?";
-					List<Studente>result = new LinkedList<Studente>();
-
-					try {
-						Connection conn = ConnectDB.getConnection();
-						PreparedStatement st= conn.prepareStatement(sql);
-						st.setString(1,corso);
-						ResultSet rs = st.executeQuery();
-						
-						while(rs.next()) {
-							Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),
-									rs.getString("cognome"),rs.getString("CDS"));
-							result.add(s);
-							 System.out.println("Controllll");
-							
-						}
+//					String sql = "SELECT s.matricola, s.cognome, s.nome, s.CDS "
+//							+ "FROM studente s, iscrizione i "
+//							+ "WHERE s.matricola = i.matricola "
+//							+ "AND i.codins = ?";
+//					List<Studente>result = new LinkedList<Studente>();
+//
+//					try {
+//						Connection conn = ConnectDB.getConnection();
+//						PreparedStatement st= conn.prepareStatement(sql);
+//						st.setString(1,corso);
+//						ResultSet rs = st.executeQuery();
+//						
+//						while(rs.next()) {
+//							Studente s = new Studente(rs.getInt("matricola"),rs.getString("nome"),
+//									rs.getString("cognome"),rs.getString("CDS"));
+//							result.add(s);
+//							 System.out.println("Controllll");
+//							
+//						}
 				 
 			 }
 			 catch(SQLException e) {
 				 
 			 }
+		
 			 
 			 
-			 return result;
+			 return studenti;
 			 
 			
 		}

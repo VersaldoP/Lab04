@@ -113,6 +113,7 @@ public class FXMLController {
     	txtResult.clear();
     	
     	String corso = comboCorsi.getValue();
+    	System.out.println(corso);
     	if(corso!=null) {
     		if(!corso.equals(" ")) {
     			
@@ -121,8 +122,8 @@ public class FXMLController {
     			sb.append(String.format("%-11d",s.getMatricola()));
     			sb.append(String.format("%-50s ",s.getNome()));
     			sb.append(String.format("%-50s ",s.getCognome()));
-    			sb.append(String.format("%-50s ",s.getCds()));
-    			System.out.println(s);
+    			sb.append(String.format("%-50s \n",s.getCds()));
+    		
     			
     		}
     		txtResult.appendText(sb.toString());
