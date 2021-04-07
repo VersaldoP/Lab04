@@ -36,4 +36,9 @@ public class Model {
 		return StudenteDAO.cerca(matricola,c);
 	}
 
+	public void iscriviStudente(String corso, Studente studente) {
+		StudenteDAO.iscrivi(corso,studente);
+		return ;
+	}
+
 }

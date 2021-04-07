@@ -27,6 +27,10 @@ public class Corso {
 	public int getPeriododidattico() {
 		return periododidattico;
 	}
+	@Override
+	public String toString() {
+		return nome;
+	}
 	
 
 }

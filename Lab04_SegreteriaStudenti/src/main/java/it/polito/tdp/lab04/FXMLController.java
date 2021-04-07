@@ -190,6 +190,73 @@ public class FXMLController {
 
     @FXML
     void doIscrivi(ActionEvent event) {
+    	
+    	
+    	txtResult.clear();
+    	String matricolaString = txtmatricolaStudente.getText();
+    	int matricola;
+    	
+    	try {
+    		matricola = Integer.parseInt(matricolaString);
+    		
+    		}
+    	catch(NumberFormatException e ){
+    		txtResult.setText("Devi inserire un numero matricola ");
+    		return;    	
+    		}
+    	if(matricolaString.length()!=6) {
+    		txtResult.setText("Devi inserire un numero matricola di 6 cifre ");
+    		return;
+    	}
+    	Studente studente = model.getStudente(matricola);
+//    	System.out.println(studente);
+    	if( studente!=null) {
+    		String corso = comboCorsi.getValue();
+    		  
+        	if(corso!=null) {
+        		if(!corso.equals(" ")) {
+        			
+        			if (model.getListaStudenti(corso).contains(studente)) {
+        				txtResult.setText("Lo Studente è già iscritto al corso");
+        				return;
+        			}
+        			else {
+        				model.iscriviStudente(corso,studente);
+        				txtResult.setText("Studente "+studente.getMatricola()+" iscritto al corso : "+corso);
+        				return;
+        			}
+        			
+//        			
+//        		StringBuilder sb = new StringBuilder();
+//        		for(Studente s :model.getListaStudenti(corso)) {
+//        			sb.append(String.format("%-11d",s.getMatricola()));
+//        			sb.append(String.format("%-50s ",s.getNome()));
+//        			sb.append(String.format("%-50s ",s.getCognome()));
+//        			sb.append(String.format("%-50s \n",s.getCds()));
+//        		
+//        			
+//        		}
+//        		txtResult.appendText(sb.toString());
+        		}
+        		else {
+        			txtResult.setText("Hai selezionato il corso nullo");
+        		}
+        		
+        	}
+        	else {
+        		txtResult.setText("Non hai selezionato nessun corso ");
+        		
+        	}
+    		
+    	}
+    	else {
+    		txtResult.setText("la matricola inserita non ha trovato corrispondenze");
+    	}
+    	
+    	
+    	
+    	
+    	
 
     }
 

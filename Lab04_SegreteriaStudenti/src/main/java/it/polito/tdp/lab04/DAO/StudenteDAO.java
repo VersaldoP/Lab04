@@ -192,5 +192,63 @@ public class StudenteDAO {
 			
 			
 		}
+
+
+
+	
+
+
+
+		public static void iscrivi(String corso, Studente studente) {
+			// TODO Auto-generated method stub
+			String sql= "INSERT INTO iscrizione (matricola,codins) "
+					+ "(SELECT  ?,c.codins "
+					+ "FROM corso c  "
+					+ "WHERE c.nome=?);";
+					
+			
+			
+			
+			 try {
+				 Connection conn = ConnectDB.getConnection();
+				 PreparedStatement st = conn.prepareStatement(sql);
+				 st.setInt(1,studente.getMatricola());
+				 st.setString(2,corso);
+				 
+				
+				 ResultSet rs= st.executeQuery();
+				 
+//				if (rs.next()) {
+//					st.close();
+//					 rs.close();
+//					 conn.close();
+//					 
+//					return ;
+//					
+//				
+//				 }
+//				else {
+					st.close();
+					 rs.close();
+					 conn.close();
+					 return ;
+//				}
+				 
+
+				
+				 
+			 }
+			 catch(SQLException e) {
+				 throw new RuntimeException("Errore Db Cerca studenti", e);
+				 
+			 }
+			
+			
+			
+		}
+
+
+
+		
 	
 }
