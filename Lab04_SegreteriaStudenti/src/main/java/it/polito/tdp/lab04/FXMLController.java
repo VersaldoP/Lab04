@@ -67,18 +67,18 @@ public class FXMLController {
     @FXML
     void doCerca(ActionEvent event) {
     	txtResult.clear();
-    	String matricolaString = txtmatricolaStudente.getText();
+
     	int matricola;
     	String corso = comboCorsi.getValue();
     	try {
-    		matricola = Integer.parseInt(matricolaString);
+    		matricola = Integer.parseInt(txtmatricolaStudente.getText());
     		
     		}
     	catch(NumberFormatException e ){
     		txtResult.setText("Devi inserire un numero matricola ");
     		return;    	
     		}
-    	if(matricolaString.length()!=6) {
+    	if(txtmatricolaStudente.getText().length()!=6) {
     		txtResult.setText("Devi inserire un numero matricola di 6 cifre ");
     		return;
     	}
@@ -161,18 +161,18 @@ public class FXMLController {
     @FXML
     void doCheck(ActionEvent event) {
     	txtResult.clear();
-    	String matricolaString = txtmatricolaStudente.getText();
+    	
     	int matricola;
     	
     	try {
-    		matricola = Integer.parseInt(matricolaString);
+    		matricola = Integer.parseInt(txtmatricolaStudente.getText());
     		
     		}
     	catch(NumberFormatException e ){
     		txtResult.setText("Devi inserire un numero matricola ");
     		return;    	
     		}
-    	if(matricolaString.length()!=6) {
+    	if(txtmatricolaStudente.getText().length()!=6) {
     		txtResult.setText("Devi inserire un numero matricola di 6 cifre ");
     		return;
     	}
